@@ -1,0 +1,12 @@
+{
+  "name": "alexa-skill-kit-sdk-howtoskill",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "alexa-sdk": "^1.0.10",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.15.5",
+    "fs": "0.0.1-security",
+    "request": "^2.83.0"
+  }
+}
