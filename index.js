@@ -1,21 +1,15 @@
 
 'use strict';
 
-const express = require('express');
-const fs = require('fs');
-const request = require('request');
-const cheerio = require('cheerio');
-const app     = express();
-
 const Alexa = require('alexa-sdk');
 const functions = require('./functions');
 
-const APP_ID = undefined;
+const APP_ID = 'amzn1.ask.skill.eaee0e89-d795-4f4f-a575-335def788075';
 
 const languageStrings = {
   'en': {
     translation: {
-      FUNCTIONS: functions.FUNCTION_EN,
+      FUNCTIONS: functions.FUNCTIONS_EN,
       SKILL_NAME: 'PHP Helper',
       WELCOME_MESSAGE: "Welcome to %s. You can ask a question like, what is echo? ... Now, what can I help you with?",
       WELCOME_REPROMPT: 'For instructions on what you can say, please say help me.',
@@ -52,28 +46,11 @@ const handlers = {
     var functionV = myFunctions[functionName];
     
     if (functionV) {
-      app.get('/scrape', function(req, res){
-        
-        url = `https://secure.php.net/manual/en/function.${functionV}.php`;
-        
-        request(url, function(error, response, html){
-          if(!error){
-            var $ = cheerio.load(html);
-            
-            $('.dc-title').filter(function(){
-              var data = $(this);
-              functionV = data.text();
-            })
-          }
-        }
-      }
-    }
-    
-    if (functionV) {
       this.attributes.speechOutput = functionV;
       this.attributes.repromptSpeech = this.t('FUNCTION_REPEAT_MESSAGE');
       this.emit(':askWithCard', functionV, this.attributes.repromptSpeech, cardTitle, functionV);
-    } else {
+    }
+    else {
       let speechOutput = this.t('FUNCTION_NOT_FOUND_MESSAGE');
       const repromptSpeech = this.t('FUNCTION_NOT_FOUND_REPROMPT');
       if (functionName) {
