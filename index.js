@@ -13,7 +13,7 @@ const languageStrings = {
       SKILL_NAME: 'PHP Helper',
       WELCOME_MESSAGE: "Welcome to %s. You can ask a question like, what is echo? ... Now, what can I help you with?",
       WELCOME_REPROMPT: 'For instructions on what you can say, please say help me.',
-      DISPLAY_CARD_TITLE: '%s  - Description for %s.',
+      DISPLAY_CARD_TITLE: 'Description for ',
       HELP_MESSAGE: "You can ask questions such as, what is echo, or, you can say exit...Now, what can I help you with?",
       HELP_REPROMPT: "You can say things like, what is echo, or you can say exit...Now, what can I help you with?",
       STOP_MESSAGE: 'Goodbye!',
@@ -46,9 +46,8 @@ const handlers = {
     var functionV = myFunctions[functionName];
     
     if (functionV) {
-      this.attributes.speechOutput = functionV;
-      this.attributes.repromptSpeech = this.t('FUNCTION_REPEAT_MESSAGE');
-      this.emit(':askWithCard', functionV, this.attributes.repromptSpeech, cardTitle, functionV);
+      var speech = this.t('DISPLAY_CARD_TITLE') + functionName + ' - ' + functionV;
+      this.emit(':tell', speech);
     }
     else {
       let speechOutput = this.t('FUNCTION_NOT_FOUND_MESSAGE');
